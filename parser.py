@@ -8,29 +8,80 @@ class HieraOutputParser(NodeVisitor):
 
     grammar = """
         input          = token*
-        token          = nil / arrow / quote / rest
+        token          = nil / arrow / comma / quote / array / hash / string / whitespace
         nil            = "nil"
         arrow          = "=>"
         quote          = '"'
-        rest           = ~r"[a-z 0-9\[\]\{\},]*"i
+        open_bracket   = "["
+        close_bracket  = "]"
+        open_curly     = "{"
+        close_curly    = "}"
+        comma          = ","
+        quote          = '"'
+        whitespace     = " "+
+        array          = open_bracket token* close_bracket
+        hash           = open_curly token* close_curly
+        string         = whitespace* chars whitespace*
+        chars          = ~r"[a-z0-9]*"i
     """
 
-    def __init__(self, grammar=None, text=None):
+    def __init__(self, grammar=None, text=None, debug=False):
         self.grammar = grammar or HieraOutputParser.grammar
         ast = Grammar(self.grammar).parse(text)
         self.result = []
+        self.debug = debug
+        if self.debug:
+            print "Text: '%s'" % text
         self.visit(ast)
 
     def visit_nil(self, node, children):
+        if self.debug:
+            print node
         self.result.append("null")
 
     def visit_arrow(self, node, children):
+        if self.debug:
+            print node
         self.result.append(":")
 
     def visit_quote(self, node, children):
+        if self.debug:
+            print node
         self.result.append(node.text)
 
-    def visit_rest(self, node, children):
+    def visit_open_bracket(self, node, children):
+        if self.debug:
+            print node
+        self.result.append(node.text)
+
+    def visit_close_bracket(self, node, children):
+        if self.debug:
+            print node
+        self.result.append(node.text)
+
+    def visit_open_curly(self, node, children):
+        if self.debug:
+            print node
+        self.result.append(node.text)
+
+    def visit_close_curly(self, node, children):
+        if self.debug:
+            print node
+        self.result.append(node.text)
+
+    def visit_comma(self, node, children):
+        if self.debug:
+            print node
+        self.result.append(node.text)
+
+    def visit_chars(self, node, children):
+        if self.debug:
+            print node
+        self.result.append(node.text)
+
+    def visit_whitespace(self, node, children):
+        if self.debug:
+            print node
         self.result.append(node.text)
 
     def generic_visit(self, node, children):
