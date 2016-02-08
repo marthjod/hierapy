@@ -45,7 +45,7 @@ class TestHieraOutputParser(TestCase):
         ('ou=TESTCA 2:PN\,o=TESTCA Foo Com\,c=de',
          'ou=TESTCA 2:PN\,o=TESTCA Foo Com\,c=de',
          'ou=TESTCA 2:PN\,o=TESTCA Foo Com\,c=de'),
-        ('!8aY%', '!8aY%', '!8aY%')
+        ('!"$%&/()=~[]{}+*#', '!"$%&/()=~[]{}+*#', '!"$%&/()=~[]{}+*#')
     ])
     def test_conversion(self, input, expected_json, expected_python):
         p = HieraOutputParser(text=input, debug=self.debug)
