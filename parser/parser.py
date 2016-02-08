@@ -8,21 +8,29 @@ class HieraOutputParser(NodeVisitor):
 
     grammar = """
         input          = token*
-        token          = nil / arrow / comma / quote / array / hash / string / whitespace
+        token          = nil / bool / symbol / array / hash / string / whitespace
+
         nil            = "nil"
+        false          = "false"
+        true           = "true"
+        bool           = true / false
+
         arrow          = "=>"
+        comma          = ","
         quote          = '"'
+        symbol         = arrow / comma / quote
+
         open_bracket   = "["
         close_bracket  = "]"
         open_curly     = "{"
         close_curly    = "}"
-        comma          = ","
-        quote          = '"'
+
         whitespace     = " "+
+
         array          = open_bracket token* close_bracket
         hash           = open_curly token* close_curly
         string         = whitespace* chars whitespace*
-        chars          = ~r"[a-z0-9\.\-@]*"i
+        chars          = ~r"[a-z0-9\.\-@_]*"i
     """
 
     def __init__(self, grammar=None, text=None, debug=False):
@@ -38,6 +46,16 @@ class HieraOutputParser(NodeVisitor):
         if self.debug:
             print node
         self.result.append("null")
+
+    def visit_false(self, node, children):
+        if self.debug:
+            print node
+        self.result.append("false")
+
+    def visit_true(self, node, children):
+        if self.debug:
+            print node
+        self.result.append("true")
 
     def visit_arrow(self, node, children):
         if self.debug:

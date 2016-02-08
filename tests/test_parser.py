@@ -29,12 +29,16 @@ class TestHieraOutputParser(TestCase):
         ('{"foo"=>["01", "02"], "bar"=>["f-oo@gee.la"]}',
          '{"foo":["01", "02"], "bar":["f-oo@gee.la"]}',
          {"foo": ["01", "02"], "bar": ["f-oo@gee.la"]}),
-        ('{"foo"=>[1, 2], "bar"=>["f-oo@gee.la"]}',
-         '{"foo":[1, 2], "bar":["f-oo@gee.la"]}',
-         {"foo": [1, 2], "bar": ["f-oo@gee.la"]}),
+        ('{"foo"=>[1, 2], "bar"=>["f-o_o@gee.la"]}',
+         '{"foo":[1, 2], "bar":["f-o_o@gee.la"]}',
+         {"foo": [1, 2], "bar": ["f-o_o@gee.la"]}),
         ('{"foo"=>[nil,nil]}',
          '{"foo":[null,null]}',
-         {"foo": [None, None]})
+         {"foo": [None, None]}),
+        ('true', 'true', True),
+        ('false', 'false', False),
+        ('{"foo"=>false, "bar"=>true}', '{"foo":false, "bar":true}',
+         {"foo": False, "bar": True})
     ])
     def test_conversion(self, input, expected_json, expected_python):
         p = HieraOutputParser(text=input, debug=self.debug)
