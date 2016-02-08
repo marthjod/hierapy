@@ -16,22 +16,18 @@ class HieraOutputParser(NodeVisitor):
         comma          = ","
         quote          = '"'
         equals         = ~r"=(?!>)" # negative lookahead
-        symbol         = arrow / comma / quote / equals
-
         open_bracket   = "["
         close_bracket  = "]"
         open_curly     = "{"
         close_curly    = "}"
+        symbol         = arrow / comma / quote / equals / open_bracket / close_bracket / open_curly / close_curly
 
-        whitespace     = " "+
+        whitespace     = ~"[\\n\\s]*"
 
         array          = open_bracket token* close_bracket
         hash           = open_curly token* close_curly
         string         = whitespace* chars whitespace*
         chars          = ~r"[a-z0-9@!%$%&\/\(\)~\+*#,;\.:\-_\|\?\\\\]*"i
-
-        # TODO known bug: literal brackets and curly braces aren't recognized correctly
-        # \[\]\{\}
     """
 
     def __init__(self, grammar=None, text=None, debug=False):
