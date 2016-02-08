@@ -54,46 +54,33 @@ class HieraOutputParser(NodeVisitor):
         self.result.append(":")
 
     def visit_quote(self, node, children):
-        if self.debug:
-            print node
-        self.result.append(node.text)
+        self.replay(node)
 
     def visit_open_bracket(self, node, children):
-        if self.debug:
-            print node
-        self.result.append(node.text)
+        self.replay(node)
 
     def visit_close_bracket(self, node, children):
-        if self.debug:
-            print node
-        self.result.append(node.text)
+        self.replay(node)
 
     def visit_open_curly(self, node, children):
-        if self.debug:
-            print node
-        self.result.append(node.text)
+        self.replay(node)
 
     def visit_close_curly(self, node, children):
-        if self.debug:
-            print node
-        self.result.append(node.text)
+        self.replay(node)
 
     def visit_comma(self, node, children):
-        if self.debug:
-            print node
-        self.result.append(node.text)
+        self.replay(node)
 
     def visit_chars(self, node, children):
-        if self.debug:
-            print node
-        self.result.append(node.text)
+        self.replay(node)
 
     def visit_equals(self, node, children):
-        if self.debug:
-            print node
-        self.result.append(node.text)
+        self.replay(node)
 
     def visit_whitespace(self, node, children):
+        self.replay(node)
+
+    def replay(self, node):
         if self.debug:
             print node
         self.result.append(node.text)
