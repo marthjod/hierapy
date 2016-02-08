@@ -15,7 +15,8 @@ class HieraOutputParser(NodeVisitor):
         arrow          = "=>"
         comma          = ","
         quote          = '"'
-        symbol         = arrow / comma / quote
+        equals         = ~r"=(?!>)" # negative lookahead
+        symbol         = arrow / comma / quote / equals
 
         open_bracket   = "["
         close_bracket  = "]"
@@ -27,7 +28,7 @@ class HieraOutputParser(NodeVisitor):
         array          = open_bracket token* close_bracket
         hash           = open_curly token* close_curly
         string         = whitespace* chars whitespace*
-        chars          = ~r"[a-z0-9\.\-@_]*"i
+        chars          = ~r"[a-z0-9\.\-@_:\\\\]*"i
     """
 
     def __init__(self, grammar=None, text=None, debug=False):
@@ -80,6 +81,11 @@ class HieraOutputParser(NodeVisitor):
         self.result.append(node.text)
 
     def visit_chars(self, node, children):
+        if self.debug:
+            print node
+        self.result.append(node.text)
+
+    def visit_equals(self, node, children):
         if self.debug:
             print node
         self.result.append(node.text)
