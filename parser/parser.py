@@ -8,12 +8,9 @@ class HieraOutputParser(NodeVisitor):
 
     grammar = """
         input          = token*
-        token          = nil / bool / symbol / array / hash / string / whitespace
+        token          = nil / symbol / array / hash / string / whitespace
 
         nil            = "nil"
-        false          = "false"
-        true           = "true"
-        bool           = true / false
 
         arrow          = "=>"
         comma          = ","
@@ -46,16 +43,6 @@ class HieraOutputParser(NodeVisitor):
         if self.debug:
             print node
         self.result.append("null")
-
-    def visit_false(self, node, children):
-        if self.debug:
-            print node
-        self.result.append("false")
-
-    def visit_true(self, node, children):
-        if self.debug:
-            print node
-        self.result.append("true")
 
     def visit_arrow(self, node, children):
         if self.debug:

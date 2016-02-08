@@ -38,7 +38,10 @@ class TestHieraOutputParser(TestCase):
         ('true', 'true', True),
         ('false', 'false', False),
         ('{"foo"=>false, "bar"=>true}', '{"foo":false, "bar":true}',
-         {"foo": False, "bar": True})
+         {"foo": False, "bar": True}),
+        ('["127.0.0.1"]', '["127.0.0.1"]', ["127.0.0.1"]),
+        ('["127.0.0.1", "127.0.0.2"]', '["127.0.0.1", "127.0.0.2"]',
+         ["127.0.0.1", "127.0.0.2"])
     ])
     def test_conversion(self, input, expected_json, expected_python):
         p = HieraOutputParser(text=input, debug=self.debug)
