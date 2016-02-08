@@ -26,4 +26,3 @@ def convert(json, debug):
 
 if __name__ == "__main__":
     convert()
-

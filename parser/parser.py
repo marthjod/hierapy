@@ -1,3 +1,5 @@
+# encoding: utf-8
+
 import json
 
 from parsimonious.grammar import Grammar
@@ -27,26 +29,24 @@ class HieraOutputParser(NodeVisitor):
         array          = open_bracket token* close_bracket
         hash           = open_curly token* close_curly
         string         = whitespace* chars whitespace*
-        chars          = ~r"[a-z0-9@!%$%&\/\(\)~\+*#,;\.:\-_\|\?\\\\]*"i
+        chars          = ~r"[a-zäöüß0-9@!%$%&\/\(\)~\+*#,;\.:\-_\|\?\\\\]*"i
     """
 
     def __init__(self, grammar=None, text=None, debug=False):
         self.grammar = grammar or HieraOutputParser.grammar
+        self.debug = debug
         ast = Grammar(self.grammar).parse(text)
         self.result = []
-        self.debug = debug
-        if self.debug:
-            print "Text: '%s'" % text
         self.visit(ast)
 
     def visit_nil(self, node, children):
         if self.debug:
-            print node
+            self.safe_print(node)
         self.result.append("null")
 
     def visit_arrow(self, node, children):
         if self.debug:
-            print node
+            self.safe_print(node)
         self.result.append(":")
 
     def visit_quote(self, node, children):
@@ -78,8 +78,16 @@ class HieraOutputParser(NodeVisitor):
 
     def replay(self, node):
         if self.debug:
-            print node
+            self.safe_print(node)
         self.result.append(node.text)
+
+    @staticmethod
+    def safe_print(inp):
+        try:
+            print inp
+        except UnicodeDecodeError:
+            # TODO
+            print inp.text.decode('utf-8')
 
     def generic_visit(self, node, children):
         pass
