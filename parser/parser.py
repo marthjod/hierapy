@@ -86,8 +86,9 @@ class HieraOutputParser(NodeVisitor):
         try:
             print inp
         except UnicodeDecodeError:
-            # TODO
-            print inp.text.decode('utf-8')
+            # TODO printing here may lead to problems preventing the parser
+            # from continuing
+            pass
 
     def generic_visit(self, node, children):
         pass
@@ -99,5 +100,6 @@ class HieraOutputParser(NodeVisitor):
         j = self.get_json()
         try:
             return json.loads(j)
-        except ValueError:
+        except ValueError as err:
+            self.safe_print(err)
             return j
