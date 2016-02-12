@@ -19,24 +19,44 @@ Options:
 
 ### Standalone CLI script
 
+```bash
+$ echo nil | hipy
+null
+$ echo nil | hipy --json
+null
+$ echo nil | hipy --python
+None
+$ echo nil | hipy --python --debug
+In: nil
+<Node called "nil" matching "nil">
+Out: None
+```
 
-For more examples, look at the test examples.
+
+For more examples (and possible limitations), cf. the test examples.
 
 
 ### Library
 
 ```python
-from hipy import parser
+>>> from hipy.parser import HieraOutputParser
+>>> parser = HieraOutputParser(text='nil')
 
-parser.get_json()
-parser.get_python()
+>>> parser.get_json()
+'null'
+
+>>> parser.get_python() is None
+True
+
+>>> parser = HieraOutputParser(text='nil', debug=True)
+<Node called "nil" matching "nil">
 ```
 
 ## Installing
 
 ### PyPI
 
-Use `pip install hipy`.
+Use `pip install hipy` (WIP).
 
 ### Locally
 
