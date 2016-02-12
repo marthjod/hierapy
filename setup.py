@@ -3,11 +3,13 @@ from setuptools import setup, find_packages
 
 
 here = os.path.abspath(os.path.dirname(__file__))
-with open(os.path.join(here, 'README.md'), encoding='utf-8') as f:
+with open(os.path.join(here, 'README.md')) as f:
     long_description = f.read()
 with open(os.path.join(here, 'requirements.txt')) as f:
-    requirements = f.read().split('\n')
+    requirements = f.read().split()
 
+print requirements
+print find_packages(exclude=['tests'])
 
 setup(
     name='hipy',
@@ -29,9 +31,5 @@ setup(
     packages=find_packages(exclude=['tests']),
     install_requires=requirements,
     setup_requires=['nose', 'nose-parameterized'],
-    entry_points={
-        'console_scripts': [
-            'hipy=hipy:convert',
-        ]
-    }
+    scripts=['hipy/hipy'],
 )

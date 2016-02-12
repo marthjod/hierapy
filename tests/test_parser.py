@@ -1,7 +1,9 @@
-from parser.parser import HieraOutputParser
 from unittest import TestCase
+
 from nose.tools import assert_equal
 from nose_parameterized import parameterized
+
+from hipy.parser import HieraOutputParser
 
 
 class TestHieraOutputParser(TestCase):
