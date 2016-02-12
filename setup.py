@@ -1,5 +1,6 @@
 import os
 from setuptools import setup, find_packages
+from hipy import version as package_version
 
 
 here = os.path.abspath(os.path.dirname(__file__))
@@ -11,7 +12,7 @@ with open(os.path.join(here, 'requirements.txt')) as f:
 
 setup(
     name='hipy',
-    version='0.1',
+    version=package_version,
     description='Convert Ruby output of older Hiera versions to equivalent Python or JSON data structures',
     long_description=long_description,
     url='https://github.com/marthjod/hipy',
