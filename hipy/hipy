@@ -8,7 +8,7 @@ from hipy.parser import HieraOutputParser
 
 
 @click.command()
-@click.option('--json/--python', help='Format output as JSON/Python', default=True)
+@click.option('--json/--python', help='Format output as JSON/Python (default: JSON)', default=True)
 @click.option('--debug', is_flag=True, default=False, help='Show debug output (mainly from parser)')
 def convert(json, debug):
     """Convert Hiera output to JSON/Python"""

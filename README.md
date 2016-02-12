@@ -10,7 +10,7 @@ Usage: hipy [OPTIONS]
   Convert Hiera output to JSON/Python
 
 Options:
-  --json / --python  Format output as JSON/Python
+  --json / --python  Format output as JSON/Python (default: JSON)
   --debug            Show debug output (mainly from parser)
   --help             Show this message and exit.
 ```
@@ -52,7 +52,11 @@ True
 <Node called "nil" matching "nil">
 ```
 
-## Installing
+## Tests
+
+Run `python setup.py nosetests`.
+
+## Installation
 
 ### PyPI
 
@@ -60,4 +64,4 @@ Use `pip install hipy` (WIP).
 
 ### Locally
 
-Run `python setup.py`.
+Run `python setup.py install`.

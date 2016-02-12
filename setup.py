@@ -8,8 +8,6 @@ with open(os.path.join(here, 'README.md')) as f:
 with open(os.path.join(here, 'requirements.txt')) as f:
     requirements = f.read().split()
 
-print requirements
-print find_packages(exclude=['tests'])
 
 setup(
     name='hipy',
