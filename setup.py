@@ -31,5 +31,6 @@ setup(
     packages=find_packages(exclude=['tests']),
     install_requires=requirements,
     setup_requires=['nose', 'nose-parameterized'],
+    test_suite='nose.collector',
     scripts=['hipy/hipy'],
 )
