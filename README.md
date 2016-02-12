@@ -10,6 +10,7 @@ Usage: hipy [OPTIONS]
   Convert Hiera output to JSON/Python
 
 Options:
+  --version          Show the version and exit.
   --json / --python  Format output as JSON/Python (default: JSON)
   --debug            Show debug output (mainly from parser)
   --help             Show this message and exit.
