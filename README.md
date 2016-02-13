@@ -61,7 +61,9 @@ Run `python setup.py nosetests`.
 
 ### PyPI
 
-Use `pip install hipy` (WIP).
+1. `pip install nose` (necessary to avoid _pkg_resources.DistributionNotFound: nose_ errors)
+2. `pip install hipy`
+
 
 ### Locally
 
