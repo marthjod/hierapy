@@ -11,9 +11,9 @@ install:
 before_script:
   - "flake8 --ignore E501 hipy/ *.py"
 script:
-  - "python setup.py nosetests"
+  - "python setup.py nosetests -c nose.cfg"
 after_script:
-  - "coveralls --verbose"
+  - "coveralls"
 notifications:
   email:
     - marthjod@gmail.com
