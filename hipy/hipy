@@ -4,12 +4,12 @@ import sys
 
 import click
 
-from hipy import version
+from hipy import __version__
 from hipy.parser import HieraOutputParser
 
 
 @click.command()
-@click.version_option(version=version)
+@click.version_option(version=__version__)
 @click.option('--json/--python', help='Format output as JSON/Python (default: JSON)', default=True)
 @click.option('--debug', is_flag=True, default=False, help='Show debug output (mainly from parser)')
 def convert(json, debug):

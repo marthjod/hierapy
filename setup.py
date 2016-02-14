@@ -1,6 +1,6 @@
 import os
 from setuptools import setup, find_packages
-from hipy import version as package_version
+from hipy import __version__ as package_version
 
 
 here = os.path.abspath(os.path.dirname(__file__))
