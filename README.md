@@ -1,5 +1,7 @@
 # hipy
 
+[![Travis CI Build Status](https://travis-ci.org/marthjod/hipy.svg?branch=master)](https://travis-ci.org/marthjod/hipy)
+
 Convert Ruby output of older Hiera versions to equivalent Python or JSON data structures.
 
 ## Usage
