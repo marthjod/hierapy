@@ -1,3 +1,5 @@
+# encoding: utf-8
+
 from unittest import TestCase
 
 from nose.tools import assert_equal
@@ -51,7 +53,8 @@ class TestHieraOutputParser(TestCase):
         ('{"one"=>{"two"=>{"three"=>{"four"=>["five@bar.com"]}}}}',
          '{"one":{"two":{"three":{"four":["five@bar.com"]}}}}',
          {"one": {"two": {"three": {"four": ["five@bar.com"]}}}}),
-        ("foo \n bar", "foo \n bar", "foo \n bar")
+        ("foo \n bar", "foo \n bar", "foo \n bar"),
+        ("ä", "ä", "ä")
     ])
     def test_conversion(self, input, expected_json, expected_python):
         p = HieraOutputParser(text=input)
@@ -102,7 +105,8 @@ class TestHieraOutputParser(TestCase):
         ('{"one"=>{"two"=>{"three"=>{"four"=>["five@bar.com"]}}}}',
          '{"one":{"two":{"three":{"four":["five@bar.com"]}}}}',
          {"one": {"two": {"three": {"four": ["five@bar.com"]}}}}),
-        ("foo \n bar", "foo \n bar", "foo \n bar")
+        ("foo \n bar", "foo \n bar", "foo \n bar"),
+        ("ä", "ä", "ä")
     ])
     def test_conversion_debug(self, input, expected_json, expected_python):
         p = HieraOutputParser(text=input, debug=True)
