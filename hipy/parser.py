@@ -29,7 +29,7 @@ class HieraOutputParser(NodeVisitor):
         array          = open_bracket token* close_bracket
         hash           = open_curly token* close_curly
         string         = whitespace* chars whitespace*
-        chars          = ~r"[a-zäöüß0-9@!%$%&\/\(\)~\+*#,;\.:\-_\|\?\\\\]*"i
+        chars          = ~r"[a-zäöüÄÖÜß0-9@!%$%&\/\(\)~\+*#,;\.:\-_\|\?\\\\]*"i
     """
 
     def __init__(self, grammar=None, text=None, debug=False):
