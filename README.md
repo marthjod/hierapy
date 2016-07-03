@@ -58,6 +58,15 @@ True
 
 ## Tests
 
+### tox
+
+```
+pip install tox
+tox
+```
+
+### manually
+
 Run `python setup.py nosetests`.
 
 ## Installation
