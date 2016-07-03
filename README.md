@@ -71,3 +71,20 @@ Run `python setup.py nosetests`.
 ### Locally
 
 Run `python setup.py install`.
+
+### [PEX](https://pex.readthedocs.io/)
+
+```bash
+virtualenv venv
+source venv/bin/activate
+pip install nose 
+pip install hipy pex
+
+pex -r <(pip freeze) -c hipy -o hipy.pex
+
+deactivate
+mv hipy.pex /tmp
+cd /tmp
+echo '{"a"=>6}' | ./hipy.pex --python
+{u'a': 6}
+```
