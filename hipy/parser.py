@@ -32,9 +32,10 @@ class HieraOutputParser(NodeVisitor):
         chars          = ~r"[a-zäöüÄÖÜß0-9@!%$%&\/\(\)~\+*#,;\.:\-_\|\?\\\\]*"i
     """
 
-    def __init__(self, grammar=None, text=None, debug=False):
+    def __init__(self, grammar=None, text=None, debug=False, quiet=False):
         self.grammar = grammar or HieraOutputParser.grammar
         self.debug = debug
+        self.quiet = quiet
         ast = Grammar(self.grammar).parse(text)
         self.result = []
         self.visit(ast)
@@ -101,5 +102,6 @@ class HieraOutputParser(NodeVisitor):
         try:
             return json.loads(j)
         except ValueError as err:
-            self.safe_print(err)
+            if not self.quiet:
+                self.safe_print(err)
             return j

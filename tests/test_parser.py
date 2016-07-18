@@ -1,5 +1,7 @@
 # encoding: utf-8
 
+import sys
+
 from unittest import TestCase
 
 from nose.tools import assert_equal
@@ -114,3 +116,22 @@ class TestHieraOutputParser(TestCase):
         p = HieraOutputParser(text=input, debug=True)
         assert_equal(p.get_json(), expected_json)
         assert_equal(p.get_python(), expected_python)
+
+    @parameterized.expand([
+        ("foo", 'No JSON object could be decoded', False),
+        ("foo", '', True)
+    ])
+    def test_invalid_input(self, input, stdoutput, quiet):
+        from StringIO import StringIO
+
+        p = HieraOutputParser(text=input, quiet=quiet)
+        orig_stdout = sys.stdout
+        try:
+            out = StringIO()
+            sys.stdout = out
+            p.get_python()
+            output = out.getvalue().strip()
+        finally:
+            sys.stdout = orig_stdout
+
+        assert_equal(stdoutput, output)
