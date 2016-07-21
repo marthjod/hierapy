@@ -61,7 +61,7 @@ True
 ### tox
 
 ```
-pip install tox
+pip install nose nose-parameterized tox
 tox
 ```
 
