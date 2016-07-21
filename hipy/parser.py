@@ -1,9 +1,12 @@
 # encoding: utf-8
 
+from __future__ import print_function, unicode_literals
+
 import json
 
 from parsimonious.grammar import Grammar
 from parsimonious.nodes import NodeVisitor
+from parsimonious.exceptions import IncompleteParseError
 
 
 class HieraOutputParser(NodeVisitor):
@@ -36,19 +39,25 @@ class HieraOutputParser(NodeVisitor):
         self.grammar = grammar or HieraOutputParser.grammar
         self.debug = debug
         self.quiet = quiet
-        ast = Grammar(self.grammar).parse(text)
-        self.result = []
-        self.visit(ast)
+        self.result = text
+        try:
+            ast = Grammar(self.grammar).parse(text)
+        except IncompleteParseError as err:
+            if not self.quiet:
+                print(err)
+        else:
+            self.result = []
+            self.visit(ast)
 
     def visit_nil(self, node, children):
-        if self.debug:
-            self.safe_print(node)
         self.result.append("null")
+        if self.debug:
+            print(node)
 
     def visit_arrow(self, node, children):
-        if self.debug:
-            self.safe_print(node)
         self.result.append(":")
+        if self.debug:
+            print(node)
 
     def visit_quote(self, node, children):
         self.replay(node)
@@ -78,18 +87,9 @@ class HieraOutputParser(NodeVisitor):
         self.replay(node)
 
     def replay(self, node):
-        if self.debug:
-            self.safe_print(node)
         self.result.append(node.text)
-
-    @staticmethod
-    def safe_print(inp):
-        try:
-            print inp
-        except UnicodeDecodeError:
-            # TODO printing here may lead to problems preventing the parser
-            # from continuing
-            pass
+        if self.debug:
+            print(node)
 
     def generic_visit(self, node, children):
         pass
@@ -103,5 +103,5 @@ class HieraOutputParser(NodeVisitor):
             return json.loads(j)
         except ValueError as err:
             if not self.quiet:
-                self.safe_print(err)
-            return j
+                print(err)
+        return j

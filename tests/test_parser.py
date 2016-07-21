@@ -1,5 +1,7 @@
 # encoding: utf-8
 
+from __future__ import unicode_literals
+
 import sys
 
 from unittest import TestCase
@@ -118,20 +120,40 @@ class TestHieraOutputParser(TestCase):
         assert_equal(p.get_python(), expected_python)
 
     @parameterized.expand([
+        ("foo", 'Expecting value: line 1 column 1 (char 0)', False),
+        ("foo", '', True)
+    ])
+    def test_invalid_input_ge_py34(self, input, stdoutput, quiet):
+        if sys.version_info.major == 3 and sys.version_info.minor >= 4:
+            from contextlib import redirect_stdout
+            from io import StringIO
+
+            p = HieraOutputParser(text=input, quiet=quiet)
+
+            f = StringIO()
+            with redirect_stdout(f):
+                p.get_python()
+            output = f.getvalue().strip()
+
+            assert_equal(stdoutput, output)
+
+    @parameterized.expand([
         ("foo", 'No JSON object could be decoded', False),
         ("foo", '', True)
     ])
-    def test_invalid_input(self, input, stdoutput, quiet):
-        from StringIO import StringIO
+    def test_invalid_input_eq_py27(self, input, stdoutput, quiet):
+        if sys.version_info.major == 2 and sys.version_info.minor == 7:
+            from cStringIO import StringIO
 
-        p = HieraOutputParser(text=input, quiet=quiet)
-        orig_stdout = sys.stdout
-        try:
-            out = StringIO()
-            sys.stdout = out
-            p.get_python()
-            output = out.getvalue().strip()
-        finally:
-            sys.stdout = orig_stdout
+            p = HieraOutputParser(text=input, quiet=quiet)
 
-        assert_equal(stdoutput, output)
+            orig_stdout = sys.stdout
+            try:
+                out = StringIO()
+                sys.stdout = out
+                p.get_python()
+                output = out.getvalue().strip()
+            finally:
+                sys.stdout = orig_stdout
+
+            assert_equal(stdoutput, output)

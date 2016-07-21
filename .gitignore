@@ -1,4 +1,9 @@
 *.pyc
 .idea/
 .eggs/
-venv/
+*egg-info*
+.tox/
+venv*/
+dist/
+build/
+

@@ -1,7 +1,8 @@
 language: python
 python:
-  - "2.6"
   - "2.7"
+  - "3.4"
+  - "3.5"
 install:
   - "pip install -r requirements.txt"
   - "pip install nose"
@@ -11,7 +12,7 @@ install:
 before_script:
   - "flake8 --ignore E501 hipy/ *.py"
 script:
-  - "python setup.py nosetests -c nose.cfg"
+  - "nosetests -c nose.cfg"
 after_script:
   - "coveralls"
 notifications:
