@@ -67,7 +67,7 @@ tox
 
 ### manually
 
-Run `python setup.py nosetests`.
+Run `nosetests -c nose.cfg`.
 
 ## Installation
 
@@ -84,7 +84,6 @@ Run `python setup.py install`.
 ```bash
 virtualenv venv
 source venv/bin/activate
-pip install nose 
 pip install hipy pex
 
 pex -r <(pip freeze) -c hipy -o hipy.pex
