@@ -1,3 +1,4 @@
 [report]
 exclude_lines =
     __version__
+show_missing = True
