@@ -61,13 +61,16 @@ True
 ### tox
 
 ```
-pip install nose nose-parameterized tox
+pip install tox
 tox
 ```
 
 ### manually
 
-Run `nosetests -c nose.cfg`.
+```
+pip install -r test-requirements.txt
+nosetests -c nose.cfg
+```
 
 ## Installation
 
