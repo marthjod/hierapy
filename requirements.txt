@@ -1,2 +1,2 @@
-click>=6.6
-parsimonious==0.6.2
+click
+parsimonious
