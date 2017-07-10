@@ -59,7 +59,8 @@ class TestHieraOutputParser(TestCase):
          {"one": {"two": {"three": {"four": ["five@bar.com"]}}}}),
         ("foo \n bar", "foo \n bar", "foo \n bar"),
         ("äöüß", "äöüß", "äöüß"),
-        ("ÄÖÜ", "ÄÖÜ", "ÄÖÜ")
+        ("ÄÖÜ", "ÄÖÜ", "ÄÖÜ"),
+        ("\303\244\303\266\303\274", "Ã¤Ã¶Ã¼", "Ã¤Ã¶Ã¼"),
     ])
     def test_conversion(self, input, expected_json, expected_python):
         p = HieraOutputParser(text=input)
@@ -112,7 +113,8 @@ class TestHieraOutputParser(TestCase):
          {"one": {"two": {"three": {"four": ["five@bar.com"]}}}}),
         ("foo \n bar", "foo \n bar", "foo \n bar"),
         ("äöüß", "äöüß", "äöüß"),
-        ("ÄÖÜ", "ÄÖÜ", "ÄÖÜ")
+        ("ÄÖÜ", "ÄÖÜ", "ÄÖÜ"),
+        ("\303\244\303\266\303\274", "Ã¤Ã¶Ã¼", "Ã¤Ã¶Ã¼"),
     ])
     def test_conversion_debug(self, input, expected_json, expected_python):
         p = HieraOutputParser(text=input, debug=True)
@@ -120,7 +122,7 @@ class TestHieraOutputParser(TestCase):
         assert_equal(p.get_python(), expected_python)
 
     @parameterized.expand([
-        ("foo", 'Expecting value: line 1 column 1 (char 0)', False),
+        ("foo", 'HieraOutputParser: Expecting value: line 1 column 1 (char 0).', False),
         ("foo", '', True)
     ])
     def test_invalid_input_ge_py34(self, input, stdoutput, quiet):
@@ -138,7 +140,7 @@ class TestHieraOutputParser(TestCase):
             assert_equal(stdoutput, output)
 
     @parameterized.expand([
-        ("foo", 'No JSON object could be decoded', False),
+        ("foo", 'HieraOutputParser: No JSON object could be decoded.', False),
         ("foo", '', True)
     ])
     def test_invalid_input_eq_py27(self, input, stdoutput, quiet):
