@@ -7,7 +7,7 @@ import sys
 from unittest import TestCase
 
 from nose.tools import assert_equal
-from nose_parameterized import parameterized
+from parameterized import parameterized
 
 from hipy.parser import HieraOutputParser
 
