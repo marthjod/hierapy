@@ -15,7 +15,6 @@ Usage: hipy [OPTIONS]
 Options:
   --version          Show the version and exit.
   --json / --python  Format output as JSON/Python (default: JSON)
-  --debug            Show debug output (mainly from parser)
   --help             Show this message and exit.
 ```
 
@@ -30,10 +29,6 @@ $ echo nil | hipy --json
 null
 $ echo nil | hipy --python
 None
-$ echo nil | hipy --python --debug
-In: nil
-<Node called "nil" matching "nil">
-Out: None
 ```
 
 
