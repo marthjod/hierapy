@@ -11,21 +11,16 @@ from hipy.parser import HieraOutputParser
 @click.command()
 @click.version_option(version=__version__)
 @click.option('--json/--python', help='Format output as JSON/Python (default: JSON)', default=True)
-@click.option('--debug', is_flag=True, default=False, help='Show debug output (mainly from parser)')
-def convert(json, debug):
+def convert(json):
     """Convert Hiera output to JSON/Python"""
 
     inp = sys.stdin.read().strip()
-    if debug:
-        print "In:", inp
     parser = HieraOutputParser(text=inp, debug=debug)
 
-    if debug:
-        print "Out:",
     if not json:
-        print parser.get_python()
+        print(parser.get_python())
     else:
-        print parser.get_json()
+        print(parser.get_json())
 
 
 if __name__ == "__main__":
