@@ -15,7 +15,7 @@ def convert(json):
     """Convert Hiera output to JSON/Python"""
 
     inp = sys.stdin.read().strip()
-    parser = HieraOutputParser(text=inp, debug=debug)
+    parser = HieraOutputParser(text=inp)
 
     if not json:
         print(parser.get_python())
